@@ -10,7 +10,7 @@ import {
 
 function Sidebar() {
   return (
-    <div className="w-64 h-screen bg-gray-900 text-white p-5">
+    <div className="fixed top-0 left-0 w-64 h-screen bg-gray-900 text-white p-5 overflow-y-auto">
 
       {/* Logo */}
       <h2 className="text-2xl font-bold mb-10">
@@ -20,9 +20,9 @@ function Sidebar() {
       {/* Navigation */}
       <nav className="flex flex-col space-y-4">
 
-        <NavLink to="/" className={navStyle}>
-          <FaTachometerAlt /> Dashboard
-        </NavLink>
+        <NavLink to="/dashboard" className={navStyle}>
+  <FaTachometerAlt /> Dashboard
+</NavLink>
 
         <NavLink to="/students" className={navStyle}>
           <FaUserGraduate /> Students

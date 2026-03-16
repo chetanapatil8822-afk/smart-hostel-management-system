@@ -3,18 +3,19 @@ import Navbar from "../components/Navbar";
 
 function DashboardLayout({ children }) {
   return (
-    <div className="flex bg-gray-100 min-h-screen">
+    <div className="flex min-h-screen bg-gray-100">
 
-      <Sidebar />
+      {/* Sidebar */}
+      <div className="fixed top-0 left-0 h-screen">
+        <Sidebar />
+      </div>
 
-      <div className="flex flex-col flex-1">
-
+      {/* Main content */}
+      <div className="flex flex-col flex-1 ml-64">
         <Navbar />
-
         <main className="p-6">
           {children}
         </main>
-
       </div>
 
     </div>
