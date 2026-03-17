@@ -23,6 +23,10 @@ function StudentDashboard() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactInput, setContactInput] = useState("");
 
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("UPI");
+  const [processing, setProcessing] = useState(false);
+
   useEffect(() => {
     const role = localStorage.getItem("userRole");
     const userId = parseInt(localStorage.getItem("userId"));
@@ -105,19 +109,47 @@ setContactInput(s.contact);
         </button>
       </div>
 
-      {/* Profile + Hostel + Room cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+{/* Profile + Hostel + Room cards */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
   {/* Name Card */}
-  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
-    <h2 className="text-lg font-semibold text-gray-700 mb-2">Name</h2>
+  <div className="bg-white/40 backdrop-blur-lg border border-white/30 p-6 shadow-xl rounded-2xl hover:scale-105 transition">
+    <div className="flex items-center gap-3 mb-2 text-gray-700">
+      
+      {/* Icon */}
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="opacity-70">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+      </svg>
+
+      <h2 className="text-lg font-semibold">Name</h2>
+    </div>
+
     <p className="text-2xl font-bold text-indigo-600">{student.name}</p>
   </div>
 
   {/* Contact Card */}
-  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
+  <div className="bg-white/40 backdrop-blur-lg border border-white/30 p-6 shadow-xl rounded-2xl hover:scale-105 transition">
+    
     <div className="flex justify-between items-center mb-2">
-      <h2 className="text-lg font-semibold text-gray-700">Contact Number</h2>
+      
+      <div className="flex items-center gap-3 text-gray-700">
+        <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="opacity-70">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 
+          19.79 19.79 0 0 1-8.63-3.07 
+          19.5 19.5 0 0 1-6-6 
+          19.79 19.79 0 0 1-3.07-8.67 
+          A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 
+          c.12.89.37 1.76.72 2.6 
+          a2 2 0 0 1-.45 2.11L8.09 9.91 
+          a16 16 0 0 0 6 6l1.48-1.48 
+          a2 2 0 0 1 2.11-.45 
+          c.84.35 1.71.6 2.6.72 
+          A2 2 0 0 1 22 16.92z"/>
+        </svg>
+
+        <h2 className="text-lg font-semibold">Contact</h2>
+      </div>
 
       <button
         onClick={() => setShowContactModal(true)}
@@ -131,14 +163,33 @@ setContactInput(s.contact);
   </div>
 
   {/* Hostel Card */}
-  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
-    <h2 className="text-lg font-semibold text-gray-700 mb-2">Hostel</h2>
+  <div className="bg-white/40 backdrop-blur-lg border border-white/30 p-6 shadow-xl rounded-2xl hover:scale-105 transition">
+    
+    <div className="flex items-center gap-3 mb-2 text-gray-700">
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="opacity-70">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>
+      </svg>
+
+      <h2 className="text-lg font-semibold">Hostel</h2>
+    </div>
+
     <p className="text-2xl font-bold text-indigo-600">{student.hostel}</p>
   </div>
 
   {/* Room Card */}
-  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
-    <h2 className="text-lg font-semibold text-gray-700 mb-2">Room</h2>
+  <div className="bg-white/40 backdrop-blur-lg border border-white/30 p-6 shadow-xl rounded-2xl hover:scale-105 transition">
+    
+    <div className="flex items-center gap-3 mb-2 text-gray-700">
+      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="opacity-70">
+        <path d="M3 21h18"/>
+        <path d="M7 21V3h10v18"/>
+        <circle cx="14" cy="12" r="0.5" fill="currentColor"/>
+      </svg>
+
+      <h2 className="text-lg font-semibold">Room</h2>
+    </div>
+
     <p className="text-2xl font-bold text-indigo-600">{student.room}</p>
   </div>
 
@@ -164,42 +215,111 @@ setContactInput(s.contact);
 
         {/* Pay Fees Button */}
         <button
-          onClick={() => setShowPayModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          Pay Fees
-        </button>
+  onClick={() => setShowPaymentModal(true)}
+  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+>
+  Pay Fees
+</button>
 
         {/* Pay Fees Modal */}
-        {showPayModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-xl shadow-lg w-80 animate-fade-in">
-              <h3 className="text-lg font-bold mb-4">Pay Fees</h3>
-              <input
-                type="number"
-                placeholder={`Enter amount (Due: ₹${(student.totalFee || 5000) - (student.paidFee || 0)})`}
-                value={feeAmount}
-                onChange={(e) => setFeeAmount(e.target.value)}
-                className="w-full p-2 border rounded-lg mb-4"
-              />
-              <div className="flex justify-end gap-4">
-                <button
-                  onClick={() => setShowPayModal(false)}
-                  className="px-4 py-2 rounded-lg border hover:bg-gray-100"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handlePayFees}
-                  className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
-                >
-                  Pay
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {showPaymentModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <div className="bg-white w-96 p-6 rounded-xl shadow-lg">
+
+      <h2 className="text-xl font-bold mb-4">Pay Fees</h2>
+
+      {/* Payment Options */}
+      <div className="flex justify-between mb-4">
+        {["UPI", "Card", "NetBanking"].map((method) => (
+          <button
+            key={method}
+            onClick={() => setPaymentMethod(method)}
+            className={`px-3 py-2 rounded-lg border ${
+              paymentMethod === method
+                ? "bg-blue-600 text-white"
+                : "bg-gray-100"
+            }`}
+          >
+            {method}
+          </button>
+        ))}
       </div>
+
+      {/* Dynamic Form */}
+      {paymentMethod === "UPI" && (
+        <input
+          type="text"
+          placeholder="Enter UPI ID"
+          className="w-full p-2 border rounded mb-3"
+        />
+      )}
+
+      {paymentMethod === "Card" && (
+        <>
+          <input
+            type="text"
+            placeholder="Card Number"
+            className="w-full p-2 border rounded mb-2"
+          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="MM/YY"
+              className="w-1/2 p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="CVV"
+              className="w-1/2 p-2 border rounded"
+            />
+          </div>
+        </>
+      )}
+
+      {paymentMethod === "NetBanking" && (
+        <select className="w-full p-2 border rounded mb-3">
+          <option>Select Bank</option>
+          <option>SBI</option>
+          <option>HDFC</option>
+          <option>ICICI</option>
+        </select>
+      )}
+
+      {/* Pay Button */}
+      <button
+        onClick={() => {
+          setProcessing(true);
+
+          setTimeout(() => {
+            setProcessing(false);
+            setShowPaymentModal(false);
+
+            setStudent(prev => ({
+              ...prev,
+              paidFee: prev.totalFee
+            }));
+
+            setNotification("✅ Payment Successful!");
+            setTimeout(() => setNotification(""), 3000);
+          }, 2000);
+        }}
+        className="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
+      >
+        {processing ? "Processing..." : "Pay Now"}
+      </button>
+
+      {/* Cancel */}
+      <button
+        onClick={() => setShowPaymentModal(false)}
+        className="w-full mt-2 border py-2 rounded-lg"
+      >
+        Cancel
+      </button>
+
+    </div>
+  </div>
+)}
+</div>
 
       {/* Complaints Section */}
       <div className="bg-white p-6 shadow-lg rounded-xl mb-6">

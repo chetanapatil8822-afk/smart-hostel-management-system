@@ -7,7 +7,6 @@ import Students from "./pages/Students";
 import Rooms from "./pages/Rooms";
 import Fees from "./pages/Fees";
 import Complaints from "./pages/Complaints";
-import Reports from "./pages/Reports";
 import StudentDashboard from "./pages/StudentDashboard";
 
 // Layout
@@ -68,14 +67,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/reports"
-          element={
-            <DashboardLayout>
-              <Reports />
-            </DashboardLayout>
-          }
-        />
+  
 
         {/* New Feature: Student Dashboard */}
         <Route
