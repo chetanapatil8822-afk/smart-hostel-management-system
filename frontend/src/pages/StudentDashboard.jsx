@@ -20,6 +20,9 @@ function StudentDashboard() {
 
   const [notification, setNotification] = useState("");
 
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactInput, setContactInput] = useState("");
+
   useEffect(() => {
     const role = localStorage.getItem("userRole");
     const userId = parseInt(localStorage.getItem("userId"));
@@ -27,7 +30,9 @@ function StudentDashboard() {
     else {
       const s = users.find(u => u.id === userId);
       if (!s.complaints) s.complaints = [];
-      setStudent({ ...s });
+      if (!s.contact) s.contact = "9876543210"; // default demo contact
+setStudent({ ...s });
+setContactInput(s.contact);
     }
   }, []);
 
@@ -101,20 +106,43 @@ function StudentDashboard() {
       </div>
 
       {/* Profile + Hostel + Room cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-white p-6 shadow-lg rounded-xl transform hover:scale-105 transition duration-300">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Name</h2>
-          <p className="text-2xl font-bold text-indigo-600">{student.name}</p>
-        </div>
-        <div className="bg-white p-6 shadow-lg rounded-xl transform hover:scale-105 transition duration-300">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Hostel</h2>
-          <p className="text-2xl font-bold text-indigo-600">{student.hostel}</p>
-        </div>
-        <div className="bg-white p-6 shadow-lg rounded-xl transform hover:scale-105 transition duration-300">
-          <h2 className="text-lg font-semibold text-gray-700 mb-2">Room</h2>
-          <p className="text-2xl font-bold text-indigo-600">{student.room}</p>
-        </div>
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+  {/* Name Card */}
+  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
+    <h2 className="text-lg font-semibold text-gray-700 mb-2">Name</h2>
+    <p className="text-2xl font-bold text-indigo-600">{student.name}</p>
+  </div>
+
+  {/* Contact Card */}
+  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
+    <div className="flex justify-between items-center mb-2">
+      <h2 className="text-lg font-semibold text-gray-700">Contact Number</h2>
+
+      <button
+        onClick={() => setShowContactModal(true)}
+        className="text-blue-600 hover:underline text-sm"
+      >
+        Edit
+      </button>
+    </div>
+
+    <p className="text-2xl font-bold text-indigo-600">{student.contact}</p>
+  </div>
+
+  {/* Hostel Card */}
+  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
+    <h2 className="text-lg font-semibold text-gray-700 mb-2">Hostel</h2>
+    <p className="text-2xl font-bold text-indigo-600">{student.hostel}</p>
+  </div>
+
+  {/* Room Card */}
+  <div className="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition">
+    <h2 className="text-lg font-semibold text-gray-700 mb-2">Room</h2>
+    <p className="text-2xl font-bold text-indigo-600">{student.room}</p>
+  </div>
+
+</div>
 
       {/* Fees Section */}
       <div className="bg-white p-6 shadow-lg rounded-xl mb-6">
@@ -231,6 +259,45 @@ function StudentDashboard() {
           </tbody>
         </table>
       </div>
+
+      {showContactModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+    <div className="bg-white p-6 rounded-xl shadow-lg w-80">
+      <h3 className="text-lg font-bold mb-4">Edit Contact Number</h3>
+
+      <input
+        type="text"
+        value={contactInput}
+        onChange={(e) => setContactInput(e.target.value)}
+        className="w-full p-2 border rounded-lg mb-4"
+      />
+
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={() => setShowContactModal(false)}
+          className="px-4 py-2 border rounded-lg hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            setStudent(prev => ({
+              ...prev,
+              contact: contactInput
+            }));
+            setShowContactModal(false);
+            setNotification("Contact updated successfully!");
+            setTimeout(() => setNotification(""), 3000);
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       {/* Room Actions */}
       <div className="bg-white p-6 shadow-lg rounded-xl mb-6">
