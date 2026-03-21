@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const { students } = useContext(AppContext);
+  const { fees, rooms, complaints } = useContext(AppContext);
  
   const navigate = useNavigate();
 
