@@ -11,7 +11,9 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    const user = users.find(u => u.email === email && u.password === password && u.role === role);
+    const user = users.find(
+      u => u.email === email && u.password === password && u.role === role
+    );
 
     if (user) {
       localStorage.setItem("userRole", user.role);
@@ -28,9 +30,10 @@ function Login() {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
       <div className="bg-white p-10 shadow-2xl rounded-3xl w-[30rem] sm:w-[35rem] md:w-[39rem] transform transition duration-500 hover:scale-110 hover:shadow-3xl">
+        
         <h1 className="text-3xl font-bold mb-6 text-center text-indigo-700 whitespace-nowrap">
-  Smart Hostel Management System
-</h1>
+          Smart Hostel Management System
+        </h1>
 
         {error && (
           <p className="text-red-600 font-medium mb-4 animate-bounce">{error}</p>
@@ -55,7 +58,7 @@ function Login() {
         <div className="flex justify-between mb-6">
           <label className={`px-4 py-2 rounded-lg cursor-pointer transition ${
             role === "Admin" ? "bg-indigo-500 text-white" : "bg-gray-200"
-          }`} >
+          }`}>
             <input
               type="radio"
               name="role"
@@ -66,6 +69,7 @@ function Login() {
             />
             Admin
           </label>
+
           <label className={`px-4 py-2 rounded-lg cursor-pointer transition ${
             role === "Student" ? "bg-indigo-500 text-white" : "bg-gray-200"
           }`}>
@@ -81,14 +85,27 @@ function Login() {
           </label>
         </div>
 
-        <button
-          onClick={handleLogin}
-          className="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transform hover:scale-105 transition duration-300"
-        >
-          Login
-        </button>
+        {/* 🔥 Buttons Row */}
+        <div className="flex gap-4">
+          
+          {/* Login Button (Left) */}
+          <button
+            onClick={handleLogin}
+            className="w-1/2 bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transform hover:scale-105 transition duration-300"
+          >
+            Login
+          </button>
 
-      
+          {/* Register Button (Right) */}
+          <button
+            onClick={() => navigate("/register")}
+            className="w-1/2 bg-white border-2 border-indigo-600 text-indigo-600 p-3 rounded-lg hover:bg-indigo-600 hover:text-white transform hover:scale-105 transition duration-300"
+          >
+            Register
+          </button>
+
+        </div>
+
       </div>
     </div>
   );

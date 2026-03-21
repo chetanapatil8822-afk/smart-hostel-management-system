@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Pages
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import Rooms from "./pages/Rooms";
@@ -74,6 +75,9 @@ function App() {
           path="/student-dashboard"
           element={<StudentDashboard />}
         />
+
+        {/* Register Route */}
+        <Route path="/register" element={<Register />} />
 
       </Routes>
     </Router>
