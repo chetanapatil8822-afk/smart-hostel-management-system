@@ -1,9 +1,36 @@
 import { useState } from "react";
-import feesData from "../data/fees";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 function Fees() {
+  
+  const { fees, setFees } = useContext(AppContext);
+  // ✅ Update Fee Status
+const updateFeeStatus = (id, newStatus) => {
+  const updatedFees = fees.map(f =>
+    f.id === id ? { ...f, status: newStatus } : f
+  );
+  setFees(updatedFees);
+};
 
-  const [fees, setFees] = useState(feesData);
+// ✅ Update Fee Amount
+const updateFeeAmount = (id, newAmount) => {
+  const updatedFees = fees.map(f =>
+    f.id === id ? { ...f, amount: newAmount } : f
+  );
+  setFees(updatedFees);
+};
+
+// ✅ Add Fee
+const addFee = (newFee) => {
+  setFees([...fees, newFee]);
+};
+
+// ✅ Get Fee by Student
+const getStudentFee = (studentId) => {
+  return fees.find(f => f.studentId === studentId);
+};  
+
   const [hostelFilter, setHostelFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);

@@ -1,9 +1,17 @@
 import { useState } from "react";
-import complaintsData from "../data/complaints";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 function Complaints() {
 
-  const [complaints, setComplaints] = useState(complaintsData);
+  const { complaints, setComplaints } = useContext(AppContext);
+  const resolveComplaint = (id) => {
+  const updated = complaints.map(c =>
+    c.id === id ? { ...c, status: "Resolved" } : c
+  );
+
+  setComplaints(updated);
+};
   const [hostelFilter, setHostelFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);

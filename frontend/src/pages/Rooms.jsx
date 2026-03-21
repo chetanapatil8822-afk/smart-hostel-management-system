@@ -1,8 +1,18 @@
 import { useState } from "react";
-import roomsData from "../data/rooms";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 function Rooms() {
-  const [rooms, setRooms] = useState(roomsData);
+  const { rooms, setRooms } = useContext(AppContext);
+
+  const updateRoom = (id, newRoom) => {
+  const updatedRooms = rooms.map(r =>
+    r.id === id ? { ...r, roomNumber: newRoom } : r
+  );
+
+  setRooms(updatedRooms);
+};
+
   const [hostelFilter, setHostelFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);

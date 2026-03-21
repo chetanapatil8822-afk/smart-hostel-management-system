@@ -1,14 +1,24 @@
-import studentsData from "../data/students";
 import { useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 function Students() {
 
   const [showModal, setShowModal] = useState(false);
-  const [students, setStudents] = useState(studentsData);
+  const { students, setStudents } = useContext(AppContext); // ✅ CORRECT
+
+  const updateStudent = (id, newData) => {
+  const updated = students.map(s =>
+    s.id === id ? { ...s, ...newData } : s
+  );
+
+  setStudents(updated);
+};
+
   const [editingStudent, setEditingStudent] = useState(null);
   const [hostelFilter, setHostelFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
-
+  
   const [formData, setFormData] = useState({
     name: "",
     course: "",

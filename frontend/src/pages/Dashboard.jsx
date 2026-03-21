@@ -3,6 +3,9 @@ import rooms from "../data/rooms";
 import fees from "../data/fees";
 import complaints from "../data/complaints";
 import { useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+
 import {
   PieChart,
   Pie,
@@ -17,7 +20,10 @@ import {
 } from "recharts";
 import { useNavigate } from "react-router-dom";
 
+
 function Dashboard() {
+  const { students } = useContext(AppContext);
+ 
   const navigate = useNavigate();
 
   const [hostelFilter, setHostelFilter] = useState("All");
